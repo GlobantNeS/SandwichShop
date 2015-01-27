@@ -26,6 +26,7 @@ public class MainActivity extends ActionBarActivity {
     int numorder=1;
     int numOrders;
     ArrayList<OrderSandwich> ordenSandwich;
+    OrderSandwich temp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +44,7 @@ public class MainActivity extends ActionBarActivity {
     }
 
     private void prepareOrder() {
+        ordenSandwich=getIntent().getParcelableArrayListExtra("ORDERS");
         numof=(TextView)findViewById(R.id.tNumOrder);
         numOrders=Integer.parseInt(getIntent().getStringExtra("TOTALORDERS"));
         numorder=getIntent().getIntExtra("NUM",numorder);
@@ -51,6 +53,11 @@ public class MainActivity extends ActionBarActivity {
             button.setText(R.string.button_text);
         else
             button.setText(R.string.button_next_take);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
     }
 
     private void preareCheckBox() {
@@ -77,15 +84,23 @@ public class MainActivity extends ActionBarActivity {
             public void onClick(View v) {
                 if(numOrders==numorder) {
                     String confirm = createString();
+                    temp=new OrderSandwich(confirm);
+                    ordenSandwich.add(temp);
                     Intent nextActivity = new Intent(MainActivity.this, ConfirmationActivity.class);
-                    nextActivity.putExtra("Confirmation", confirm);
+                    nextActivity.putParcelableArrayListExtra("ORDERS",ordenSandwich);
+                    nextActivity.putExtra("TOTALORDERS",String.valueOf(numOrders));
+                    nextActivity.putExtra("NUM",numorder);
                     startActivity(nextActivity);
                 }
                 else
                 {
                     String confirm = createString();
-                    Intent nextActivity = new Intent(MainActivity.this, ConfirmationActivity.class);
-                    nextActivity.putExtra("Confirmation", confirm);
+                    temp=new OrderSandwich(confirm);
+                    ordenSandwich.add(temp);
+                    Intent nextActivity = new Intent(MainActivity.this, MainActivity.class);
+                    nextActivity.putParcelableArrayListExtra("ORDERS",ordenSandwich);
+                    nextActivity.putExtra("TOTALORDERS",String.valueOf(numOrders));
+                    nextActivity.putExtra("NUM",numorder);
                     startActivity(nextActivity);
                 }
             }
@@ -94,16 +109,16 @@ public class MainActivity extends ActionBarActivity {
 
     private String createString() {
         String result="";
-        result+="Sandiwch:\n\t\t\t";
+        result+="Sandiwch: ";
         result+=spinner.getSelectedItem().toString();
-        result+="\nBread:";
+        result+="\nBread: ";
         for(int a=0;a<3;a++)
             if(rb[a].isChecked())
-                result+="\n\t\t\t"+rb[a].getText().toString();
-        result+="\nTopping(s):";
+                result+=rb[a].getText().toString()+" ";
+        result+="\nTopping(s): ";
         for(int a=0;a<6;a++)
             if(cb[a].isChecked())
-                result+="\n\t\t\t"+cb[a].getText().toString();
+                result+=cb[a].getText().toString()+" ";
         return result;
     }
 

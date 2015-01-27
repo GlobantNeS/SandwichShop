@@ -35,6 +35,7 @@ public class CountActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 Intent order=new Intent(CountActivity.this,MainActivity.class);
+                ordenSandwich=new ArrayList<OrderSandwich>();
                 order.putParcelableArrayListExtra("ORDERS",ordenSandwich);
                 order.putExtra("TOTALORDERS",spinner.getSelectedItem().toString());
                 order.putExtra("NUM",0);

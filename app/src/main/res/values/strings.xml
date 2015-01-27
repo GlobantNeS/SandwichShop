@@ -18,6 +18,7 @@
     <string name="number_order">Number of Orders</string>
     <string name="button_next">Take Order(s)</string>
     <string name="button_next_take">Take Next Order</string>
+    <string name="total_orders">Orders</string>
     <string-array name="list_sandwich">
         <item>Tuna</item>
         <item>Ham</item>
