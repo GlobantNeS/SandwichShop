@@ -18,12 +18,12 @@ import java.util.ArrayList;
 
 public class MainActivity extends ActionBarActivity {
 
-    Spinner spinner=null;
-    RadioButton []rb=new RadioButton[3];
-    Button button=null;
-    TextView numof=null;
-    CheckBox []cb=new CheckBox[6];
-    int numorder=1;
+    Spinner spinner = null;
+    RadioButton[] rb = new RadioButton[3];
+    Button button = null;
+    TextView numof = null;
+    CheckBox[] cb = new CheckBox[6];
+    int numorder = 1;
     int numOrders;
     ArrayList<OrderSandwich> ordenSandwich;
     OrderSandwich temp;
@@ -32,8 +32,8 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        spinner=(Spinner) findViewById(R.id.spinner);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,R.array.list_sandwich, android.R.layout.simple_spinner_item);
+        spinner = (Spinner) findViewById(R.id.spinner);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.list_sandwich, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         prepareRadios();
@@ -44,63 +44,56 @@ public class MainActivity extends ActionBarActivity {
     }
 
     private void prepareOrder() {
-        ordenSandwich=getIntent().getParcelableArrayListExtra("ORDERS");
-        numof=(TextView)findViewById(R.id.tNumOrder);
-        numOrders=Integer.parseInt(getIntent().getStringExtra("TOTALORDERS"));
-        numorder=getIntent().getIntExtra("NUM",numorder);
-        numof.setText(++numorder+" of "+numOrders);
-        if(numOrders==numorder)
+        ordenSandwich = getIntent().getParcelableArrayListExtra("ORDERS");
+        numof = (TextView) findViewById(R.id.tNumOrder);
+        numOrders = Integer.parseInt(getIntent().getStringExtra("TOTALORDERS"));
+        numorder = getIntent().getIntExtra("NUM", numorder);
+        numof.setText(++numorder + " of " + numOrders);
+        if (numOrders == numorder)
             button.setText(R.string.button_text);
         else
             button.setText(R.string.button_next_take);
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-    }
-
     private void preareCheckBox() {
-        cb[0]=(CheckBox)findViewById(R.id.cbChili);
-        cb[1]=(CheckBox)findViewById(R.id.cbJam);
-        cb[2]=(CheckBox)findViewById(R.id.cbKetchup);
-        cb[3]=(CheckBox)findViewById(R.id.cbMayonnaise);
-        cb[4]=(CheckBox)findViewById(R.id.cbMustard);
-        cb[5]=(CheckBox)findViewById(R.id.cbTomatoe);
+        cb[0] = (CheckBox) findViewById(R.id.cbChili);
+        cb[1] = (CheckBox) findViewById(R.id.cbJam);
+        cb[2] = (CheckBox) findViewById(R.id.cbKetchup);
+        cb[3] = (CheckBox) findViewById(R.id.cbMayonnaise);
+        cb[4] = (CheckBox) findViewById(R.id.cbMustard);
+        cb[5] = (CheckBox) findViewById(R.id.cbTomatoe);
 
 
     }
 
     private void prepareRadios() {
-        rb[0]=(RadioButton) findViewById(R.id.rWheat);
-        rb[1]=(RadioButton) findViewById(R.id.rWhite);
-        rb[2]=(RadioButton) findViewById(R.id.rRye);
+        rb[0] = (RadioButton) findViewById(R.id.rWheat);
+        rb[1] = (RadioButton) findViewById(R.id.rWhite);
+        rb[2] = (RadioButton) findViewById(R.id.rRye);
     }
 
     private void prepareButton() {
-        button=(Button) findViewById(R.id.button);
+        button = (Button) findViewById(R.id.button);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(numOrders==numorder) {
+                if (numOrders == numorder) {
                     String confirm = createString();
-                    temp=new OrderSandwich(confirm);
+                    temp = new OrderSandwich(confirm);
                     ordenSandwich.add(temp);
                     Intent nextActivity = new Intent(MainActivity.this, ConfirmationActivity.class);
-                    nextActivity.putParcelableArrayListExtra("ORDERS",ordenSandwich);
-                    nextActivity.putExtra("TOTALORDERS",String.valueOf(numOrders));
-                    nextActivity.putExtra("NUM",numorder);
+                    nextActivity.putParcelableArrayListExtra("ORDERS", ordenSandwich);
+                    nextActivity.putExtra("TOTALORDERS", String.valueOf(numOrders));
+                    nextActivity.putExtra("NUM", numorder);
                     startActivity(nextActivity);
-                }
-                else
-                {
+                } else {
                     String confirm = createString();
-                    temp=new OrderSandwich(confirm);
+                    temp = new OrderSandwich(confirm);
                     ordenSandwich.add(temp);
                     Intent nextActivity = new Intent(MainActivity.this, MainActivity.class);
-                    nextActivity.putParcelableArrayListExtra("ORDERS",ordenSandwich);
-                    nextActivity.putExtra("TOTALORDERS",String.valueOf(numOrders));
-                    nextActivity.putExtra("NUM",numorder);
+                    nextActivity.putParcelableArrayListExtra("ORDERS", ordenSandwich);
+                    nextActivity.putExtra("TOTALORDERS", String.valueOf(numOrders));
+                    nextActivity.putExtra("NUM", numorder);
                     startActivity(nextActivity);
                 }
             }
@@ -108,17 +101,17 @@ public class MainActivity extends ActionBarActivity {
     }
 
     private String createString() {
-        String result="";
-        result+="Sandiwch: ";
-        result+=spinner.getSelectedItem().toString();
-        result+="\nBread: ";
-        for(int a=0;a<3;a++)
-            if(rb[a].isChecked())
-                result+=rb[a].getText().toString()+" ";
-        result+="\nTopping(s): ";
-        for(int a=0;a<6;a++)
-            if(cb[a].isChecked())
-                result+=cb[a].getText().toString()+" ";
+        String result = "";
+        result += "Sandiwch: ";
+        result += spinner.getSelectedItem().toString();
+        result += "\nBread: ";
+        for (int a = 0; a < 3; a++)
+            if (rb[a].isChecked())
+                result += rb[a].getText().toString() + " ";
+        result += "\nTopping(s): ";
+        for (int a = 0; a < 6; a++)
+            if (cb[a].isChecked())
+                result += cb[a].getText().toString() + " ";
         return result;
     }
 
