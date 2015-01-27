@@ -11,6 +11,9 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.RadioButton;
 import android.widget.Spinner;
+import android.widget.TextView;
+
+import java.util.ArrayList;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -18,8 +21,11 @@ public class MainActivity extends ActionBarActivity {
     Spinner spinner=null;
     RadioButton []rb=new RadioButton[3];
     Button button=null;
-
+    TextView numof=null;
     CheckBox []cb=new CheckBox[6];
+    int numorder=1;
+    int numOrders;
+    ArrayList<OrderSandwich> ordenSandwich;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +38,19 @@ public class MainActivity extends ActionBarActivity {
         prepareRadios();
         preareCheckBox();
         prepareButton();
+        prepareOrder();
 
+    }
+
+    private void prepareOrder() {
+        numof=(TextView)findViewById(R.id.tNumOrder);
+        numOrders=Integer.parseInt(getIntent().getStringExtra("TOTALORDERS"));
+        numorder=getIntent().getIntExtra("NUM",numorder);
+        numof.setText(++numorder+" of "+numOrders);
+        if(numOrders==numorder)
+            button.setText(R.string.button_text);
+        else
+            button.setText(R.string.button_next_take);
     }
 
     private void preareCheckBox() {
@@ -57,10 +75,19 @@ public class MainActivity extends ActionBarActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String confirm=createString();
-                Intent nextActivity= new Intent(MainActivity.this,ConfirmationActivity.class);
-                nextActivity.putExtra("Confirmation",confirm);
-                startActivity(nextActivity);
+                if(numOrders==numorder) {
+                    String confirm = createString();
+                    Intent nextActivity = new Intent(MainActivity.this, ConfirmationActivity.class);
+                    nextActivity.putExtra("Confirmation", confirm);
+                    startActivity(nextActivity);
+                }
+                else
+                {
+                    String confirm = createString();
+                    Intent nextActivity = new Intent(MainActivity.this, ConfirmationActivity.class);
+                    nextActivity.putExtra("Confirmation", confirm);
+                    startActivity(nextActivity);
+                }
             }
         });
     }

@@ -15,10 +15,21 @@
     <string name="mayonnaise">Mayonnaise</string>
     <string name="action_settings">Settings</string>
     <string name="button_text">Place Order</string>
+    <string name="number_order">Number of Orders</string>
+    <string name="button_next">Take Order(s)</string>
+    <string name="button_next_take">Take Next Order</string>
     <string-array name="list_sandwich">
         <item>Tuna</item>
         <item>Ham</item>
         <item>Club</item>
+    </string-array>
+
+    <string-array name="count_sandwich">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
     </string-array>
 
 </resources>

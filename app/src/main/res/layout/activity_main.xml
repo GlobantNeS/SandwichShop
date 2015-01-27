@@ -18,6 +18,18 @@
         android:layout_height="20dp"
         android:background="@color/space_color" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:id="@+id/tNumOrder"
+        android:layout_gravity="right" />
+
+    <Space
+        android:layout_width="fill_parent"
+        android:layout_height="20dp"
+        android:background="@color/space_color" />
+
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="fill_parent"
